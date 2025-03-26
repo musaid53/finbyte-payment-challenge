@@ -20,6 +20,8 @@ public class PaymentApplication {
         payments.add(new Payment(3.0, "cash"));
         payments.add(new Payment(4.0, "credit"));
 
+        payments.forEach(payment -> System.out.println("Date:"+ LocalDateTime.now() + payment.amount + ", " + payment.type));
+
         var sum = sum(payments);
         System.out.println(sum);
 
@@ -27,10 +29,10 @@ public class PaymentApplication {
         // todo print count with payment types
 
         var paymentsWithTax = addTax(payments, 0.1, "cash");
-
         // todo print payments with tax
 
-        //concurrentAddPayment(payments);
+
+        concurrentAddPayment(payments);
 
     }
 
@@ -62,16 +64,18 @@ public class PaymentApplication {
         t1.start();
         t2.start();
 
-        // todo print all payments
+
 
     }
 
     public static void addPayment(Payment payment, List<Payment> payments) {
 
-        payments.add(payment);
-        System.out.println("Added payment: " + payment.amount + ", " + payment.type);
+
         try {
-            Thread.sleep(3000);
+            System.out.println("Date:"+ LocalDateTime.now() +" Adding payment: " + payment.amount + ", " + payment.type);
+            Thread.sleep(new Random().nextLong(3000, 6000));
+            payments.add(payment);
+            System.out.println("Date:"+ LocalDateTime.now() +" Added payment: " + payment.amount + ", " + payment.type);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
